@@ -6,7 +6,7 @@ The demo explains prayer not as magic, but as an **informational act**. In this 
 
 ## Demo
 
-[Open Demo](https://alexander-shalymenov.github.io/prayer-as-an-informational-act/)
+[Open Demo](https://alexander-shalymenov.github.io/prayer-as-an-informational-act/index.html)
 
 [View index.html](./index.html)
 
