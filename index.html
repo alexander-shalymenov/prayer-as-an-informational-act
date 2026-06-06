@@ -1,370 +1,920 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Shalymenov's Criterion · Prayer as an Informational Act</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<title>Possibility to Actuality Timeline</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        body {
-            background: #f5f7fa;
-            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            padding: 48px 32px;
-            color: #202124;
-        }
+<style>
+:root {
+    --bg: #ffffff;
+    --panel: #ffffff;
+    --text: #111827;
+    --muted: #5f6368;
+    --line: #dadce0;
+    --soft: #f8f9fa;
+    --blue: #1a73e8;
+    --green: #0f7b3f;
+    --green-soft: #e6f4ea;
+    --yellow: #f9ab00;
+    --yellow-soft: #fff8e1;
+    --orange: #f29900;
+    --orange-soft: #fef7e0;
+    --red: #d93025;
+    --red-soft: #fce8e6;
+}
 
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            background: #ffffff;
-            border-radius: 32px;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.03), 0 4px 12px rgba(0,0,0,0.05);
-            overflow: hidden;
-        }
+* {
+    box-sizing: border-box;
+}
 
-        .header {
-            padding: 40px 48px 24px 48px;
-            border-bottom: 1px solid #e8eaed;
-        }
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
 
-        .header h1 {
-            font-weight: 500;
-            font-size: 2rem;
-            letter-spacing: -0.3px;
-            color: #1a73e8;
-            margin-bottom: 8px;
-        }
+.page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 28px;
+}
 
-        .formula {
-            font-family: 'SF Mono', 'Fira Code', monospace;
-            background: #f1f3f4;
-            display: inline-block;
-            padding: 8px 24px;
-            border-radius: 32px;
-            font-size: 1.3rem;
-            margin: 16px 0 12px 0;
-            font-weight: 500;
-            color: #1967d2;
-        }
+.panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 22px;
+    box-shadow: none;
+}
 
-        .sub {
-            font-size: 0.9rem;
-            color: #5f6368;
-            margin-top: 8px;
-        }
+h1 {
+    margin: 0 0 8px;
+    font-size: 34px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+}
 
-        .theory-section {
-            padding: 32px 48px;
-            background: #fefefe;
-        }
+h2 {
+    margin: 0 0 12px;
+    font-size: 22px;
+    font-weight: 500;
+}
 
-        .theory-section h3 {
-            font-size: 1.1rem;
-            font-weight: 500;
-            margin-bottom: 20px;
-            color: #202124;
-        }
+h3 {
+    margin: 0 0 12px;
+    font-size: 18px;
+    font-weight: 500;
+}
 
-        .theory-section p {
-            font-size: 0.9rem;
-            line-height: 1.5;
-            margin-bottom: 16px;
-            color: #3c4043;
-        }
+p {
+    color: var(--muted);
+    line-height: 1.55;
+}
 
-        .def-box {
-            background: #f8f9fa;
-            border-radius: 24px;
-            padding: 20px 24px;
-            margin: 24px 0;
-            border: 1px solid #e8eaed;
-        }
+.formula {
+    display: inline-block;
+    background: var(--soft);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-family: monospace;
+    margin-top: 8px;
+    color: var(--text);
+}
 
-        .def-box strong {
-            color: #1a73e8;
-        }
+button {
+    border: 1px solid var(--blue);
+    border-radius: 8px;
+    padding: 11px 16px;
+    font-weight: 600;
+    cursor: pointer;
+    background: var(--blue);
+    color: #ffffff;
+    font-size: 14px;
+    margin-right: 8px;
+    box-shadow: none;
+}
 
-        .examples-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 24px;
-            padding: 16px 48px 40px 48px;
-            background: #ffffff;
-        }
+button.secondary {
+    background: #ffffff;
+    color: var(--blue);
+    border: 1px solid var(--line);
+}
 
-        .example-card {
-            flex: 1;
-            min-width: 260px;
-            background: #ffffff;
-            border-radius: 24px;
-            border: 1px solid #e8eaed;
-            padding: 20px;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
-        }
+.timeline {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    overflow-x: auto;
+    padding: 14px 0;
+}
 
-        .example-card.success {
-            border-left: 4px solid #0d652d;
-        }
+.fact {
+    min-width: 170px;
+    background: #ffffff;
+    border: 2px solid var(--green);
+    border-radius: 12px;
+    padding: 14px;
+    text-align: center;
+    font-weight: 600;
+    color: var(--text);
+    box-shadow: none;
+}
 
-        .example-card.fail {
-            border-left: 4px solid #c5221f;
-        }
+.arrow {
+    font-size: 24px;
+    color: var(--muted);
+}
 
-        .prayer-title {
-            font-weight: 500;
-            font-size: 1rem;
-            margin-bottom: 12px;
-            color: #202124;
-        }
+.branch-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+}
 
-        .prayer-text {
-            font-family: 'SF Mono', monospace;
-            font-size: 0.75rem;
-            background: #f8f9fa;
-            padding: 12px;
-            border-radius: 16px;
-            margin: 12px 0;
-            border-left: 3px solid #dadce0;
-            color: #202124;
-            line-height: 1.4;
-        }
+.branch {
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px;
+    box-shadow: none;
+}
 
-        .reason {
-            font-size: 0.72rem;
-            margin: 8px 0;
-            padding: 6px 0;
-            color: #5f6368;
-        }
+.branch.actual {
+    border: 3px solid var(--green);
+    background: #ffffff;
+}
 
-        .cost-row {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.75rem;
-            margin-top: 10px;
-            padding: 6px 0;
-            border-top: 1px solid #e8eaed;
-            font-family: monospace;
-        }
+.branch.unrealized {
+    opacity: 0.62;
+    background: #ffffff;
+    border: 1px solid var(--line);
+}
 
-        .winner {
-            font-weight: 500;
-            margin-top: 16px;
-            text-align: center;
-            padding: 8px;
-            border-radius: 40px;
-            font-size: 0.8rem;
-        }
+.branch-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
 
-        .winner.success {
-            background: #e6f4ea;
-            color: #0d652d;
-        }
+.metric {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    border-bottom: 1px solid var(--line);
+    padding: 8px 0;
+    font-size: 14px;
+}
 
-        .winner.fail {
-            background: #fce8e6;
-            color: #c5221f;
-        }
+.metric span {
+    color: var(--muted);
+}
 
-        .demo-card {
-            background: #f8f9fa;
-            border-radius: 24px;
-            padding: 24px;
-            margin: 16px 48px 32px 48px;
-            border: 1px solid #e8eaed;
-        }
+.cost {
+    margin-top: 12px;
+    font-size: 18px;
+    font-weight: 600;
+}
 
-        .slider-container {
-            margin: 20px 0;
-        }
+.result-box {
+    background: #ffffff;
+    border: 3px solid var(--green);
+    border-radius: 14px;
+    padding: 18px;
+    margin-top: 18px;
+    box-shadow: none;
+}
 
-        input {
-            width: 100%;
-            margin-top: 8px;
-            accent-color: #1a73e8;
-        }
+.result-box h2 {
+    color: var(--green);
+}
 
-        .footer {
-            padding: 32px 48px;
-            background: #fafbfc;
-            border-top: 1px solid #e8eaed;
-            font-size: 0.8rem;
-            color: #5f6368;
-        }
+.warning {
+    background: #ffffff;
+    border: 3px solid var(--yellow);
+    border-radius: 14px;
+    padding: 16px;
+    margin-top: 18px;
+    color: var(--text);
+    box-shadow: none;
+}
 
-        .author-link {
-            display: inline-block;
-            margin-top: 12px;
-            font-weight: 500;
-            text-decoration: none;
-            color: #1a73e8;
-            border-bottom: 1px solid #dadce0;
-        }
+/* Anti-demonstration */
 
-        hr {
-            margin: 20px 0;
-            border: 0;
-            height: 1px;
-            background: #e8eaed;
-        }
+.prayer-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    margin-top: 18px;
+}
 
-        @media (max-width: 900px) {
-            body { padding: 24px 16px; }
-            .header { padding: 32px 24px; }
-            .theory-section { padding: 24px 24px; }
-            .examples-grid { padding: 16px 24px 32px 24px; }
-            .demo-card { margin: 16px 24px 24px 24px; }
-            .footer { padding: 28px 24px; }
-        }
-    </style>
+.prayer-card {
+    background: #ffffff;
+    border: 2px solid var(--line);
+    border-left: 2px solid var(--line) !important;
+    border-radius: 20px;
+    padding: 22px;
+    box-shadow: none !important;
+}
+
+.prayer-card.success {
+    border: 3px solid var(--green) !important;
+    border-left: 3px solid var(--green) !important;
+}
+
+.prayer-card.fail {
+    border: 3px solid var(--red) !important;
+    border-left: 3px solid var(--red) !important;
+}
+
+.quote {
+    background: #f8f9fa;
+    border: 1px solid var(--line);
+    border-left: 1px solid var(--line) !important;
+    border-radius: 16px;
+    padding: 14px;
+    font-family: monospace;
+    font-size: 13px;
+    line-height: 1.45;
+    color: #111827;
+    margin: 12px 0 18px;
+    box-shadow: none !important;
+}
+
+.explainer {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 14px;
+}
+
+.prayer-result {
+    border-radius: 18px;
+    padding: 11px 14px;
+    text-align: center;
+    font-size: 14px;
+    margin-top: 14px;
+}
+
+.prayer-result.success {
+    background: var(--green-soft);
+    color: var(--green);
+}
+
+.prayer-result.fail {
+    background: var(--red-soft);
+    color: var(--red);
+}
+
+.prayer-note {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 12px;
+}
+
+/* Live demonstration */
+
+.demo-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-top: 18px;
+}
+
+.control {
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px;
+    box-shadow: none;
+}
+
+.control label {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 14px;
+    color: var(--text);
+    margin-bottom: 10px;
+}
+
+.control label span {
+    color: var(--muted);
+}
+
+input[type="range"] {
+    width: 100%;
+    accent-color: var(--blue);
+}
+
+.live-box {
+    background: #ffffff;
+    border: 3px solid var(--green);
+    border-radius: 16px;
+    padding: 18px;
+    margin-top: 18px;
+    box-shadow: none;
+}
+
+.live-box.stage-strong {
+    border-color: var(--green);
+}
+
+.live-box.stage-stable {
+    border-color: var(--green);
+}
+
+.live-box.stage-partial {
+    border-color: var(--blue);
+}
+
+.live-box.stage-weak {
+    border-color: var(--yellow);
+}
+
+.live-box.stage-fragile {
+    border-color: var(--orange);
+}
+
+.live-box.stage-near {
+    border-color: var(--red);
+}
+
+.live-box.stage-collapse {
+    border-color: var(--red);
+}
+
+.live-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.live-score {
+    font-size: 34px;
+    font-weight: 600;
+    margin: 10px 0;
+}
+
+.live-text {
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+.live-numbers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.live-number {
+    background: #f8f9fa;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 10px;
+    font-size: 13px;
+}
+
+.live-number span {
+    display: block;
+    color: var(--muted);
+    margin-bottom: 4px;
+}
+
+.progress-track {
+    width: 100%;
+    height: 10px;
+    background: #eef2f7;
+    border-radius: 999px;
+    overflow: hidden;
+    margin-top: 14px;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--green);
+    border-radius: 999px;
+}
+
+.progress-fill.stage-strong,
+.progress-fill.stage-stable {
+    background: var(--green);
+}
+
+.progress-fill.stage-partial {
+    background: var(--blue);
+}
+
+.progress-fill.stage-weak {
+    background: var(--yellow);
+}
+
+.progress-fill.stage-fragile {
+    background: var(--orange);
+}
+
+.progress-fill.stage-near,
+.progress-fill.stage-collapse {
+    background: var(--red);
+}
+
+@media (max-width: 900px) {
+    .branch-grid,
+    .prayer-grid,
+    .demo-controls,
+    .live-numbers {
+        grid-template-columns: 1fr;
+    }
+
+    .page {
+        padding: 18px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+}
+</style>
 </head>
+
 <body>
-<div class="container">
-    <div class="header">
-        <h1>Prayer as an Informational Act</h1>
-        <div class="formula">F(Ω) = K(Ω) − p(Ω)</div>
-        <div class="sub">Shalymenov's Criterion · Why some prayers succeed and others fail</div>
-    </div>
+<div class="page">
 
-    <div class="theory-section">
-        <h3>How prayer works according to Informational Actualism</h3>
-        <p>Prayer is not magic. It is an <strong>informational act</strong> that modifies the subject's own configuration within the space of possibilities (Ω). The treatise (Chapter IV) explains: <em>“Prayer lowers the cost of a determinate state if it renders the subject more aligned with that state. It clarifies intention, reduces inner contradiction, disciplines attention, and links desire with action.”</em></p>
-        <p><strong>Ω (space of possibilities)</strong> – all admissible future states. Physics describes transitions but not why one becomes fact. Prayer operates within Ω, not against it.</p>
-        <p><strong>K(Ω) (algorithmic complexity)</strong> – the cost of description. Extra wishes, contradictions, or vague clauses increase K. A clean, direct prayer keeps K low.</p>
-        <p><strong>p(Ω) (probabilistic noise / surprise)</strong> – the cost of improbability. Words like “maybe”, “if possible”, contradictory desires raise p.</p>
-        <div class="def-box">
-            <strong>Shalymenov's Criterion:</strong> The factual state (what actually happens) is the one that minimizes total cost:<br>
-            <span style="font-family: monospace; font-weight: 500; font-size: 1rem;">F = K(Ω) − p(Ω)</span><br>
-            → Reality selects the state with the lowest F. A prayer modifies K and p for the desired outcome. Only an exact, noise‑free prayer makes the desired F smaller than the F of the alternative (“nothing changes”).
-        </div>
-        <p>Therefore, prayers fail when they contain extra wishes, contradictions, or vague language — because those increase K and p, making the desired outcome more expensive than doing nothing.</p>
-    </div>
+    <section class="panel">
+        <h1>Possibility to Actuality Timeline</h1>
+        <p>
+            This demo shows a simple idea: reality does not continue through every possible branch.
+            Several next states are possible, but only one becomes the next actual fact.
+        </p>
+        <div class="formula">ω* = arg min (complexity + instability - probability support)</div>
+    </section>
 
-    <div class="examples-grid" id="examplesGrid"></div>
+    <section class="panel">
+        <h2>Main timeline</h2>
+        <div id="timeline" class="timeline"></div>
+    </section>
 
-    <div class="demo-card">
-        <div style="font-weight: 500; font-size: 0.9rem; margin-bottom: 8px;">Live demonstration: how adding noise destroys a prayer</div>
-        <div style="font-family: monospace; background: #ffffff; padding: 12px; border-radius: 14px; margin: 12px 0; border: 1px solid #e8eaed;">
-            “I ask for a promotion. I am ready.” (exact baseline prayer)
-        </div>
-        <div id="liveValues" style="font-size: 0.8rem; margin: 12px 0;">
-            Desired (Promotion): K=0.60, p=0.40 → F=0.20 &nbsp;&nbsp; Default (No promotion): K=0.90, p=0.70 → F=0.20
-        </div>
-        <div class="slider-container">
-            <span style="font-size: 0.75rem;">Add noise (extra wishes, contradictions, vague clauses) →</span>
-            <input type="range" id="noiseSlider" min="0" max="1.5" step="0.05" value="0">
-            <div style="display: flex; justify-content: space-between; font-size: 0.7rem; margin-top: 4px;"><span>Exact prayer</span><span>Heavy noise</span></div>
-        </div>
-        <div id="liveOutcome" class="winner success" style="margin-top: 16px;">Prayer succeeds: Promotion actualizes</div>
-        <div style="font-size: 0.7rem; margin-top: 16px; border-top: 1px solid #e8eaed; padding-top: 12px;">
-            As you add noise, K and p for the desired outcome rise. When its cost exceeds the cost of “no promotion”, the prayer fails — nothing changes.
-        </div>
-    </div>
+    <section class="panel">
+        <h2>Possible next states</h2>
+        <p>
+            Each branch is possible. The engine calculates which one becomes actual.
+        </p>
+        <div id="branches" class="branch-grid"></div>
 
-    <div class="footer">
-        <strong>Key insight from Chapter IV</strong><br>
-        • A prayer works as a structured prompt (API call to reality).<br>
-        • It does not violate physics but modifies the subject’s configuration, lowering the cost of a possible future.<br>
-        • Extra wishes, contradictions, or vague language increase algorithmic cost K and noise p, making the desired outcome more expensive than alternatives.<br>
-        • Only exact, disciplined prayers succeed — they minimize K and p just enough.<br>
-        <hr>
-        Based on the treatise <em>“Informational Actualism: From the Metaphysics of Foundation to Computable Factuality”</em> by Alexander Shalymenov.<br>
-        <a href="https://philpeople.org/profiles/alexander-shalymenov" target="_blank" class="author-link">View author profile on PhilPeople →</a>
-    </div>
+        <div style="margin-top:18px;">
+            <button onclick="actualizeNext()">Actualize next state</button>
+            <button class="secondary" onclick="generateBranches()">Generate new possibilities</button>
+            <button class="secondary" onclick="resetDemo()">Reset</button>
+        </div>
+
+        <div id="result" class="warning">
+            No branch has been actualized yet.
+        </div>
+    </section>
+
+    <section class="panel">
+        <h2>Anti-demonstration: exact prayer and added noise</h2>
+        <p>
+            This section shows why the informational act must remain structurally exact.
+            Additional conditions, contradiction, or vague intention increase cost and make the desired outcome harder to actualize.
+        </p>
+
+        <div class="prayer-grid">
+
+            <div class="prayer-card success">
+                <h3>Exact prayer (perfect resonance)</h3>
+                <div class="quote">
+                    “I request a promotion to senior position. I have completed all projects, acquired skills. No other requests.”
+                </div>
+                <div class="explainer">
+                    Activates exactly Foundation G. Algorithmic Purity. Target Configuration. No extra nodes, no contradictions.
+                </div>
+
+                <div class="metric">
+                    <strong>Desired (Promotion)</strong>
+                    <strong>K=0.6&nbsp;&nbsp;p=0.4&nbsp;&nbsp;F=0.20</strong>
+                </div>
+
+                <div class="metric">
+                    <strong>Default (No promotion)</strong>
+                    <strong>K=1&nbsp;&nbsp;p=0.6&nbsp;&nbsp;F=0.40</strong>
+                </div>
+
+                <div class="prayer-result success">Prayer succeeds: Promotion actualizes</div>
+                <div class="prayer-note">Lower F wins. Only exact prayer makes desired F smaller.</div>
+            </div>
+
+            <div class="prayer-card fail">
+                <h3>Extra wish (added condition)</h3>
+                <div class="quote">
+                    “Grant me promotion, and also give me a company car and a parking spot.”
+                </div>
+                <div class="explainer">
+                    Adds extra conditions. K and p increase for all outcomes. Desired cost rises above no promotion.
+                </div>
+
+                <div class="metric">
+                    <strong>Desired (Promotion)</strong>
+                    <strong>K=1.1&nbsp;&nbsp;p=0.7&nbsp;&nbsp;F=0.40</strong>
+                </div>
+
+                <div class="metric">
+                    <strong>Default (No promotion)</strong>
+                    <strong>K=0.9&nbsp;&nbsp;p=0.7&nbsp;&nbsp;F=0.20</strong>
+                </div>
+
+                <div class="prayer-result fail">Prayer fails: No promotion</div>
+                <div class="prayer-note">Lower F wins. Only exact prayer makes desired F smaller.</div>
+            </div>
+
+            <div class="prayer-card fail">
+                <h3>Contradiction / vague</h3>
+                <div class="quote">
+                    “I want a promotion, but I’m not sure I deserve it. Maybe a small raise is fine too.”
+                </div>
+                <div class="explainer">
+                    Missing Algorithmic Purity. Contradiction increases p(Ω). Desired outcome becomes too expensive.
+                </div>
+
+                <div class="metric">
+                    <strong>Desired (Promotion)</strong>
+                    <strong>K=1.2&nbsp;&nbsp;p=0.9&nbsp;&nbsp;F=0.30</strong>
+                </div>
+
+                <div class="metric">
+                    <strong>Default (No promotion)</strong>
+                    <strong>K=0.9&nbsp;&nbsp;p=0.7&nbsp;&nbsp;F=0.20</strong>
+                </div>
+
+                <div class="prayer-result fail">Prayer fails: No promotion</div>
+                <div class="prayer-note">Lower F wins. Only exact prayer makes desired F smaller.</div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="panel">
+        <h2>Live demonstration</h2>
+        <p>
+            Move the sliders to see how the signal changes. Small amounts of noise do not immediately collapse the act.
+            The result passes through several stages first.
+        </p>
+
+        <div class="demo-controls">
+
+            <div class="control">
+                <label>
+                    Clarity
+                    <span id="clarityValue">90</span>
+                </label>
+                <input id="clarity" type="range" min="0" max="100" step="5" value="90" oninput="updateLiveDemo()">
+            </div>
+
+            <div class="control">
+                <label>
+                    Intention
+                    <span id="intentionValue">88</span>
+                </label>
+                <input id="intention" type="range" min="0" max="100" step="5" value="90" oninput="updateLiveDemo()">
+            </div>
+
+            <div class="control">
+                <label>
+                    Action alignment
+                    <span id="actionValue">84</span>
+                </label>
+                <input id="action" type="range" min="0" max="100" step="5" value="85" oninput="updateLiveDemo()">
+            </div>
+
+            <div class="control">
+                <label>
+                    Discipline
+                    <span id="disciplineValue">82</span>
+                </label>
+                <input id="discipline" type="range" min="0" max="100" step="5" value="85" oninput="updateLiveDemo()">
+            </div>
+
+            <div class="control">
+                <label>
+                    Extra conditions
+                    <span id="extraValue">0</span>
+                </label>
+                <input id="extra" type="range" min="0" max="100" step="5" value="0" oninput="updateLiveDemo()">
+            </div>
+
+            <div class="control">
+                <label>
+                    Heavy noise
+                    <span id="noiseValue">0</span>
+                </label>
+                <input id="noise" type="range" min="0" max="100" step="5" value="0" oninput="updateLiveDemo()">
+            </div>
+
+        </div>
+
+        <div id="liveBox" class="live-box stage-strong">
+            <div id="liveTitle" class="live-title">Strong alignment</div>
+            <div id="liveScore" class="live-score">88</div>
+            <div id="liveText" class="live-text">
+                The informational act is coherent and strongly aligned.
+            </div>
+
+            <div class="live-numbers">
+                <div class="live-number">
+                    <span>Alignment</span>
+                    <strong id="alignmentNumber">88</strong>
+                </div>
+                <div class="live-number">
+                    <span>Cost penalty</span>
+                    <strong id="penaltyNumber">0</strong>
+                </div>
+                <div class="live-number">
+                    <span>Stage</span>
+                    <strong id="stageNumber">1 / 7</strong>
+                </div>
+            </div>
+
+            <div class="progress-track">
+                <div id="progressFill" class="progress-fill stage-strong"></div>
+            </div>
+        </div>
+    </section>
+
 </div>
 
 <script>
-    // Four prayer examples with correct, distinct numbers
-    const examples = [
-        {
-            title: "Exact prayer (perfect resonance)",
-            text: "“I request a promotion to senior position. I have completed all projects, acquired skills. No other requests.”",
-            reason: "Activates exactly Foundation G, Algorithmic Purity, Target Configuration. No extra nodes, no contradictions.",
-            desiredK: 0.60, desiredP: 0.40,
-            defaultK: 1.00, defaultP: 0.60
-        },
-        {
-            title: "Extra wish (added condition)",
-            text: "“Grant me promotion, and also give me a company car and a parking spot.”",
-            reason: "Adds extra conditions → K and p increase for all outcomes. Desired cost rises above ‘no promotion’.",
-            desiredK: 1.10, desiredP: 0.70,
-            defaultK: 0.90, defaultP: 0.70
-        },
-        {
-            title: "Contradiction / vague",
-            text: "“I want a promotion, but I’m not sure I deserve it. Maybe a small raise is fine too.”",
-            reason: "Missing ‘Algorithmic Purity’. Contradiction increases p(Ω). Desired outcome becomes too expensive.",
-            desiredK: 1.20, desiredP: 0.90,
-            defaultK: 0.90, defaultP: 0.70
-        },
-        {
-            title: "Noisy / overloaded",
-            text: "“Please, please let me get that promotion, if possible, and also make my boss like me, and let me win the lottery, and keep me healthy…”",
-            reason: "High noise, fuzzy language, many extra wishes. K and p skyrocket → default outcome cheaper.",
-            desiredK: 1.50, desiredP: 1.20,
-            defaultK: 0.90, defaultP: 0.70
-        }
-    ];
+let factCounter = 1;
+let timeline = ["Fact 1"];
+let branches = [];
+let selectedId = null;
 
-    function renderExamples() {
-        const container = document.getElementById('examplesGrid');
-        if (!container) return;
-        container.innerHTML = '';
-        examples.forEach(ex => {
-            const desiredF = ex.desiredK - ex.desiredP;
-            const defaultF = ex.defaultK - ex.defaultP;
-            const prayerSucceeds = desiredF < defaultF;
-            const outcomeClass = prayerSucceeds ? "success" : "fail";
-            const outcomeText = prayerSucceeds ? "Prayer succeeds: Promotion actualizes" : "Prayer fails: No promotion";
-            const card = document.createElement('div');
-            card.className = `example-card ${outcomeClass}`;
-            card.innerHTML = `
-                <div class="prayer-title">${ex.title}</div>
-                <div class="prayer-text">${ex.text}</div>
-                <div class="reason">${ex.reason}</div>
-                <div class="cost-row">
-                    <span><strong>Desired (Promotion)</strong></span>
-                    <span>K=${ex.desiredK}  p=${ex.desiredP}  <strong>F=${desiredF.toFixed(2)}</strong></span>
+function randomBetween(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
+function makeBranch(index) {
+    const names = ["A", "B", "C", "D"];
+
+    const probability = Number(randomBetween(0.2, 0.85).toFixed(2));
+    const complexity = Math.floor(randomBetween(2, 14));
+    const instability = Number(randomBetween(0.5, 8).toFixed(2));
+
+    const cost = Number((complexity + instability - probability * 10).toFixed(2));
+
+    return {
+        id: names[index],
+        probability,
+        complexity,
+        instability,
+        cost
+    };
+}
+
+function generateBranches() {
+    branches = [0, 1, 2, 3].map(makeBranch);
+    selectedId = null;
+    renderBranches();
+    renderResult(null);
+}
+
+function actualizeNext() {
+    const sorted = [...branches].sort((a, b) => a.cost - b.cost);
+    const winner = sorted[0];
+    const second = sorted[1];
+
+    selectedId = winner.id;
+    factCounter++;
+
+    timeline.push("Fact " + factCounter + " from branch " + winner.id);
+
+    renderTimeline();
+    renderBranches();
+    renderResult(winner, second);
+}
+
+function renderTimeline() {
+    const box = document.getElementById("timeline");
+    box.innerHTML = "";
+
+    timeline.forEach((fact, index) => {
+        box.innerHTML += `<div class="fact">${fact}</div>`;
+
+        if (index < timeline.length - 1) {
+            box.innerHTML += `<div class="arrow">→</div>`;
+        }
+    });
+}
+
+function renderBranches() {
+    const box = document.getElementById("branches");
+    box.innerHTML = "";
+
+    branches.forEach(branch => {
+        let className = "branch";
+
+        if (selectedId) {
+            className = branch.id === selectedId ? "branch actual" : "branch unrealized";
+        }
+
+        box.innerHTML += `
+            <div class="${className}">
+                <div class="branch-title">Branch ${branch.id}</div>
+
+                <div class="metric">
+                    <span>Probability support</span>
+                    <strong>${branch.probability}</strong>
                 </div>
-                <div class="cost-row">
-                    <span><strong>Default (No promotion)</strong></span>
-                    <span>K=${ex.defaultK}  p=${ex.defaultP}  <strong>F=${defaultF.toFixed(2)}</strong></span>
+
+                <div class="metric">
+                    <span>Complexity</span>
+                    <strong>${branch.complexity}</strong>
                 </div>
-                <div class="winner ${outcomeClass}">${outcomeText}</div>
-                <div style="font-size: 0.7rem; margin-top: 10px; color: #5f6368;">Lower F wins. Only exact prayer makes desired F smaller.</div>
-            `;
-            container.appendChild(card);
-        });
+
+                <div class="metric">
+                    <span>Instability</span>
+                    <strong>${branch.instability}</strong>
+                </div>
+
+                <div class="cost">Actualization cost: ${branch.cost}</div>
+            </div>
+        `;
+    });
+}
+
+function renderResult(winner, second) {
+    const box = document.getElementById("result");
+
+    if (!winner) {
+        box.className = "warning";
+        box.innerHTML = "No branch has been actualized yet.";
+        return;
     }
 
-    function initInteractive() {
-        const slider = document.getElementById('noiseSlider');
-        if (!slider) return;
-        const liveValues = document.getElementById('liveValues');
-        const liveOutcome = document.getElementById('liveOutcome');
-        function update() {
-            const noise = parseFloat(slider.value);
-            let desiredK = 0.6 + noise * 0.4;
-            let desiredP = 0.4 + noise * 0.3;
-            let defaultK = 0.9 + noise * 0.12;
-            let defaultP = 0.7 + noise * 0.2;
-            let desiredF = desiredK - desiredP;
-            let defaultF = defaultK - defaultP;
-            let success = desiredF < defaultF;
-            liveValues.innerHTML = `Desired (Promotion): K=${desiredK.toFixed(2)}, p=${desiredP.toFixed(2)} → F=${desiredF.toFixed(2)} &nbsp;&nbsp; Default (No promotion): K=${defaultK.toFixed(2)}, p=${defaultP.toFixed(2)} → F=${defaultF.toFixed(2)}`;
-            liveOutcome.className = `winner ${success ? 'success' : 'fail'}`;
-            liveOutcome.innerText = success ? "Prayer succeeds: Promotion actualizes" : "Prayer fails: No promotion";
-        }
-        slider.addEventListener('input', update);
-        update();
+    box.className = "result-box";
+    box.innerHTML = `
+        <h2>Branch ${winner.id} became actual.</h2>
+        <p>
+            It became the next fact because it had the lowest actualization cost:
+            <strong>${winner.cost}</strong>.
+        </p>
+        <p>
+            The closest unrealized branch was Branch ${second.id}, with cost
+            <strong>${second.cost}</strong>.
+        </p>
+        <p>
+            The other branches did not disappear as ideas. They remained possible, but reality continued through Branch ${winner.id}.
+        </p>
+    `;
+}
+
+function resetDemo() {
+    factCounter = 1;
+    timeline = ["Fact 1"];
+    selectedId = null;
+    generateBranches();
+    renderTimeline();
+}
+
+function getNumber(id) {
+    return Number(document.getElementById(id).value);
+}
+
+function setText(id, value) {
+    document.getElementById(id).textContent = value;
+}
+
+function calculateLiveState(clarity, intention, action, discipline, extra, noise) {
+    const alignment =
+        clarity * 0.30 +
+        intention * 0.25 +
+        action * 0.25 +
+        discipline * 0.20;
+
+    const extraActive = Math.max(0, extra - 15);
+    const noiseActive = Math.max(0, noise - 20);
+
+    const extraPenalty = Math.pow(extraActive / 85, 1.45) * 28;
+    const noisePenalty = Math.pow(noiseActive / 80, 1.55) * 34;
+
+    const combinedActive = Math.max(0, extra + noise - 55);
+    const combinedPenalty = Math.pow(combinedActive / 145, 1.65) * 18;
+
+    const penalty = extraPenalty + noisePenalty + combinedPenalty;
+    const rawScore = alignment - penalty;
+    const score = Math.max(0, Math.min(100, Math.round(rawScore)));
+
+    return {
+        alignment: Math.round(alignment),
+        penalty: Math.round(penalty),
+        score
+    };
+}
+
+function getLiveStatus(score) {
+    if (score >= 80) {
+        return {
+            label: "Strong alignment",
+            className: "stage-strong",
+            stage: "1 / 7",
+            text: "The informational act is coherent and strongly aligned."
+        };
     }
 
-    renderExamples();
-    initInteractive();
+    if (score >= 68) {
+        return {
+            label: "Stable signal",
+            className: "stage-stable",
+            stage: "2 / 7",
+            text: "The signal remains stable. Added cost is present, but the direction still holds."
+        };
+    }
+
+    if (score >= 56) {
+        return {
+            label: "Partial alignment",
+            className: "stage-partial",
+            stage: "3 / 7",
+            text: "The act is still active. Noise has started to weaken the structure, but it has not collapsed."
+        };
+    }
+
+    if (score >= 44) {
+        return {
+            label: "Weak but active",
+            className: "stage-weak",
+            stage: "4 / 7",
+            text: "The structure is weak but still active. The desired outcome remains possible, with higher cost."
+        };
+    }
+
+    if (score >= 32) {
+        return {
+            label: "Fragile signal",
+            className: "stage-fragile",
+            stage: "5 / 7",
+            text: "The signal is fragile. Extra conditions and noise are now making actualization difficult."
+        };
+    }
+
+    if (score >= 18) {
+        return {
+            label: "Near collapse",
+            className: "stage-near",
+            stage: "6 / 7",
+            text: "The signal is close to collapse. The request still exists, but coherence is almost lost."
+        };
+    }
+
+    return {
+        label: "Signal collapse",
+        className: "stage-collapse",
+        stage: "7 / 7",
+        text: "The informational act no longer has enough coherence to remain effective."
+    };
+}
+
+function updateLiveDemo() {
+    const clarity = getNumber("clarity");
+    const intention = getNumber("intention");
+    const action = getNumber("action");
+    const discipline = getNumber("discipline");
+    const extra = getNumber("extra");
+    const noise = getNumber("noise");
+
+    setText("clarityValue", clarity);
+    setText("intentionValue", intention);
+    setText("actionValue", action);
+    setText("disciplineValue", discipline);
+    setText("extraValue", extra);
+    setText("noiseValue", noise);
+
+    const state = calculateLiveState(clarity, intention, action, discipline, extra, noise);
+    const status = getLiveStatus(state.score);
+
+    const liveBox = document.getElementById("liveBox");
+    const progressFill = document.getElementById("progressFill");
+
+    liveBox.className = "live-box " + status.className;
+    progressFill.className = "progress-fill " + status.className;
+
+    document.getElementById("liveTitle").textContent = status.label;
+    document.getElementById("liveScore").textContent = state.score;
+    document.getElementById("liveText").textContent = status.text;
+
+    document.getElementById("alignmentNumber").textContent = state.alignment;
+    document.getElementById("penaltyNumber").textContent = state.penalty;
+    document.getElementById("stageNumber").textContent = status.stage;
+
+    progressFill.style.width = state.score + "%";
+}
+
+generateBranches();
+renderTimeline();
+updateLiveDemo();
 </script>
 </body>
 </html>
